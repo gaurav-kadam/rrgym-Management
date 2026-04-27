@@ -1,4 +1,5 @@
 const db = require("../config/db");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const rateLimit = require("express-rate-limit");
 
@@ -17,6 +18,17 @@ const cookieOptions = () => ({
   maxAge: 8 * 60 * 60 * 1000,
 });
 
+const looksLikeBcryptHash = (value) =>
+  typeof value === "string" && /^\$2[aby]\$\d{2}\$/.test(value);
+
+const verifyAdminPassword = async (plainPassword, storedPassword) => {
+  if (!plainPassword || !storedPassword) return false;
+  if (looksLikeBcryptHash(storedPassword)) {
+    return bcrypt.compare(plainPassword, storedPassword);
+  }
+  return plainPassword === storedPassword;
+};
+
 // ─── ADMIN LOGIN ──────────────────────────────────────────────────────────────
 const adminLogin = async (req, res) => {
   try {
@@ -34,7 +46,8 @@ const adminLogin = async (req, res) => {
     }
 
     const admin = rows[0];
-    if (password !== admin.password) {
+    const isPasswordValid = await verifyAdminPassword(password, admin.password);
+    if (!isPasswordValid) {
       return res.status(401).json({ message: "Invalid username or password" });
     }
 
@@ -85,11 +98,13 @@ const changePassword = async (req, res) => {
     }
 
     const [rows] = await db.query("SELECT password FROM admins WHERE id = ?", [req.user.id]);
-    if (currentPassword !== rows[0].password) {
+    const isCurrentPasswordValid = await verifyAdminPassword(currentPassword, rows[0].password);
+    if (!isCurrentPasswordValid) {
       return res.status(401).json({ message: "Current password is incorrect" });
     }
 
-    await db.query("UPDATE admins SET password = ? WHERE id = ?", [newPassword, req.user.id]);
+    const hashedPassword = await bcrypt.hash(newPassword, 12);
+    await db.query("UPDATE admins SET password = ? WHERE id = ?", [hashedPassword, req.user.id]);
     res.json({ message: "Password changed successfully" });
   } catch (error) {
     console.error("changePassword error:", error);
@@ -120,9 +135,10 @@ const addTrainer = async (req, res) => {
       return res.status(409).json({ message: "Username already taken" });
     }
 
+    const hashedPassword = await bcrypt.hash(password, 12);
     const [result] = await db.query(
       "INSERT INTO admins (name, username, password, role) VALUES (?, ?, ?, 'trainer')",
-      [name.trim(), username.trim().toLowerCase(), password]
+      [name.trim(), username.trim().toLowerCase(), hashedPassword]
     );
 
     res.status(201).json({ message: "Trainer account created successfully", trainerId: result.insertId });
