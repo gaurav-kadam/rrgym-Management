@@ -163,7 +163,7 @@ export default function Navbar() {
                                     <Avatar
                                         src={
                                             user?.image
-                                                ? `http://3.26.15.105:3000/uploads/${user.image}`
+                                                ? `http://52.62.38.76:3000/uploads/${user.image}`
                                                 : ""
                                         }
                                         sx={{
