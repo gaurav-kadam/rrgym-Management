@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASE_URL = "http://32.236.42.21:3000";
+export const BASE_URL = "http://3.26.15.105:3000";
 export const ADMIN_TOKEN_KEY = "admin_token";
 export const USER_TOKEN_KEY = "user_token";
 const LEGACY_ADMIN_TOKEN_KEY = "token";
