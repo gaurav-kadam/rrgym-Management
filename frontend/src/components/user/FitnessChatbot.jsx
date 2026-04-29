@@ -14,7 +14,7 @@ import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 // import {baseURL} from "../../services/api";
 
-const API_URL = `http://32.236.42.21:3000/api/chatbot/generate`;
+const API_URL = `http://3.26.15.105:3000/api/chatbot/generate`;
 
 export default function FitnessChatbot() {
     const [open, setOpen] = useState(false);
