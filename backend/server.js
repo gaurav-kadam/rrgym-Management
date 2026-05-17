@@ -67,6 +67,12 @@ const PORT = process.env.PORT || 5000;
         res.status(200).send("HI Sandip I am working");
     });
 
+    // app.use("/assets", express.static("assets"));
+
+    app.use("/public", express.static("public"));
+
+        
+
     app.use((err, req, res, next) => {
         if (err.code === "LIMIT_FILE_SIZE") return res.status(400).json({ message: "File too large. Maximum size is 2MB." });
         if (err.message === "Only image files are allowed") return res.status(400).json({ message: err.message });
