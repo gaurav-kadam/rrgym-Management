@@ -91,7 +91,7 @@ export default function ContactUs() {
                     >
                         <Box
                             component="img"
-                            src="../../../public/assets/contactus.webp"
+                            src="/assets/contactus.webp"
                             alt="Contact"
                             sx={{
                                 width: "100%",

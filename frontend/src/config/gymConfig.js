@@ -11,7 +11,7 @@ const GYM_CONFIG = {
   phone:   "+91 8208728607",
   address: "Kashidara Road, Near Mahadeo Mandir, Sakri - 424304",
 
-  // Paths are relative to /public/assets/
+  // Paths are served from frontend/public/assets.
   logoBlack: "/assets/logoBlack.png",  // used on light backgrounds
   logoWhite: "/assets/logoWhite.png",  // used on dark backgrounds
 };
