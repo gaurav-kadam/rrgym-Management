@@ -2,13 +2,13 @@ import { Box, Container } from "@mui/material";
 import ParrallaxTitle from "../../components/shared/ParrallaxTitle";
 
 const images = [
-    { src: "../../../public/assets/img1.jpeg", span: "big" },
-    { src: "../../../public/assets/img2.jpeg", span: "tall" },
-    { src: "../../../public/assets/img3.jpeg" },
-    { src: "../../../public/assets/img4.jpeg" },
-    { src: "../../../public/assets/img5.jpeg" },
-    { src: "../../../public/assets/img6.jpeg", span: "big" },
-    { src: "../../../public/assets/img7.jpeg", span: "tall" },
+    { src: "/assets/img1.jpeg", span: "big" },
+    { src: "/assets/img2.jpeg", span: "tall" },
+    { src: "/assets/img3.jpeg" },
+    { src: "/assets/img4.jpeg" },
+    { src: "/assets/img5.jpeg" },
+    { src: "/assets/img6.jpeg", span: "big" },
+    { src: "/assets/img7.jpeg", span: "tall" },
 ];
 
 export default function Gallery() {

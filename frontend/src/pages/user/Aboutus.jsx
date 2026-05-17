@@ -14,7 +14,7 @@ export default function AboutUs() {
                 heading="Enhance Your Workout Experience"
                 description="Our gym offers a variety of services, including personal training, group fitness classes, and nutrition coaching. Let us help you achieve your fitness goals.
 At our gym, we prioritize our customers' needs and work hard to provide them with the best possible fitness experience."
-                imageSrc="../../public/assets/img11.jpg"
+                imageSrc="/assets/img11.jpg"
                 imageAlt="Wellness"
             />
 
@@ -22,13 +22,13 @@ At our gym, we prioritize our customers' needs and work hard to provide them wit
                 heading="Discover New Fitness Goals"
                 description="Our gym offers a variety of services, including personal training, group fitness classes, and nutrition coaching. Let us help you achieve your fitness goals.
             At our gym, we prioritize our customers' needs and work hard to provide them with the best possible fitness experience."
-                imageSrc="../../public/assets/img12.jpg"
+                imageSrc="/assets/img12.jpg"
             />
             {/* Banner Section */}
             <Box
                 sx={{
                     height: { xs: 300, md: 400 },
-                    backgroundImage: `url(../../public/assets/bgimg.jpg)`,
+                    backgroundImage: `url(/assets/bgimg.jpg)`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundAttachment: "fixed",

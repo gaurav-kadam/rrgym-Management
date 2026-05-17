@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import authService from "../../services/authService";
+import { BASE_URL } from "../../services/api";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import {
@@ -163,7 +164,7 @@ export default function Navbar() {
                                     <Avatar
                                         src={
                                             user?.image
-                                                ? `http://52.62.38.76:3000/uploads/${user.image}`
+                                                ? `${BASE_URL}/uploads/${user.image}`
                                                 : ""
                                         }
                                         sx={{

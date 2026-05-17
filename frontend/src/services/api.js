@@ -1,6 +1,8 @@
 import axios from "axios";
 
-export const BASE_URL = "http://52.62.38.76:3000";
+const trimTrailingSlash = (value = "") => value.replace(/\/+$/, "");
+
+export const BASE_URL = trimTrailingSlash(import.meta.env.VITE_API_URL || "");
 export const ADMIN_TOKEN_KEY = "admin_token";
 export const USER_TOKEN_KEY = "user_token";
 const LEGACY_ADMIN_TOKEN_KEY = "token";
@@ -16,7 +18,7 @@ const ADMIN_API_PREFIXES = [
 ];
 
 const api = axios.create({
-  baseURL: BASE_URL,
+  baseURL: BASE_URL || undefined,
   withCredentials: true,   // Cookie-based auth still works for same-domain setups
 });
 
@@ -60,7 +62,8 @@ const getRequestPath = (config) => {
   const requestUrl = config?.url || "";
 
   try {
-    return new URL(requestUrl, BASE_URL).pathname;
+    const base = BASE_URL || (typeof window !== "undefined" ? window.location.origin : "http://localhost");
+    return new URL(requestUrl, base).pathname;
   } catch (error) {
     return requestUrl;
   }

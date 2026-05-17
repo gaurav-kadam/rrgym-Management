@@ -12,9 +12,9 @@ import ClickAwayListener from "@mui/material/ClickAwayListener";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
-// import {baseURL} from "../../services/api";
+import { BASE_URL } from "../../services/api";
 
-const API_URL = `http://52.62.38.76:3000/api/chatbot/generate`;
+const API_URL = `${BASE_URL}/api/chatbot/generate`;
 
 export default function FitnessChatbot() {
     const [open, setOpen] = useState(false);

@@ -4,7 +4,7 @@ export default function ParrallaxTitle({ Title }) {
         <Box
             sx={{
                 height: { xs: 150, md: 150 },
-                backgroundImage: `url(../../public/assets/bgimg.jpg)`,
+                backgroundImage: `url(/assets/bgimg.jpg)`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundAttachment: "fixed",

@@ -1,18 +1,29 @@
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const path = require("path");
 require("dotenv").config();
 
 const initDb = require("./config/initdb");
 
 const app = express();
+const PORT = process.env.PORT || 5000;
+const publicPath = path.join(__dirname, "public");
 
-const allowedOrigins = [
+const parseOrigins = (...values) => values
+    .flatMap((value) => String(value || "").split(","))
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+
+const allowedOrigins = [...new Set([
     process.env.FRONTEND_URL,
     process.env.PROD_URL,
+    process.env.BASE_URL,
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-].filter(Boolean);
+    `http://localhost:${PORT}`,
+    `http://127.0.0.1:${PORT}`,
+].flatMap((origin) => parseOrigins(origin)))];
 
 app.use(cors({
     origin: function (origin, callback) {
@@ -30,13 +41,12 @@ app.use(require("compression")());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use("/assets", express.static("assets"));
+app.use("/assets", express.static(path.join(__dirname, "assets")));
 app.use("/uploads", (req, res, next) => {
     res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
     next();
-}, express.static("uploads"));
-
-const PORT = process.env.PORT || 5000;
+}, express.static(path.join(__dirname, "uploads")));
+app.use(express.static(publicPath));
 
 (async () => {
     await initDb();
@@ -65,6 +75,14 @@ const PORT = process.env.PORT || 5000;
 
     app.get("/api/health", (req, res) => {
         res.status(200).send("HI Sandip I am working");
+    });
+
+    app.get(/^(?!\/api|\/uploads|\/assets).*/, (req, res, next) => {
+        if (req.path.includes(".")) return next();
+
+        res.sendFile(path.join(publicPath, "index.html"), (err) => {
+            if (err) next();
+        });
     });
 
     app.use((err, req, res, next) => {
